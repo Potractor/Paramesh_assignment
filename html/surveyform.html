@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="styles.css" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Survey Form</title>
+</head>
+<body>
+    <main>
+        <h2>Contact Survey Form</h2>
+        <div class="center">
+            <form id="surveyForm">
+                <div class="details">
+                    <div class="name">
+                        <p>Name</p>
+                        <input class="input" type="text" name="name" id="name" value=""/>
+                    </div>
+                    <div class="email">
+                        <p>Email</p>
+                        <input class="input" type="email" name="email" id="email" value=""/>
+                    </div>
+                </div>
+
+                <section class="section1">
+                    <p>Is this the first time you are using our products and services?</p>
+                    <div class="option1">
+                        <div>
+                            <input type="radio" name="question1" value="Yes" id="yes1">
+                            <label for="yes1">Yes</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="question1" value="No" id="no1">
+                            <label for="no1">No</label>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section2">
+                    <p>Would you recommend our products and services to your friends and colleagues?</p>
+                    <div class="option2">
+                        <div>
+                            <input type="radio" name="question2" value="Yes" id="yes2">
+                            <label for="yes2">Yes</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="question2" value="No" id="no2">
+                            <label for="no2">No</label>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section3">
+                    <p>How satisfied are you with our company overall?</p>
+                    <div class="option3">
+                        <div>
+                            <input type="radio" name="question3" value="Satisfied" id="satisfied">
+                            <label for="satisfied">Satisfied</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="question3" value="Undecided" id="undecided">
+                            <label for="undecided">Undecided</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="question3" value="Unsatisfied" id="unsatisfied">
+                            <label for="unsatisfied">Unsatisfied</label>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section4">
+                    <p>Do you have suggestions to improve our service?</p>
+                    <textarea class="suggestion-box" name="suggestion" id="suggestion"></textarea>
+                </section>
+
+                <section>
+                    <button class="button" type="button" onclick="submitForm()">SUBMIT</button>
+                    <button class="reset" type="button" onclick="resetForm()">Reset</button>
+                </section>
+            </form>
+        </div>
+    </main>
+
+    <div id="popup" class="container" style="display: none;">
+        <h2>Survey Submission</h2>
+        <div id="popupContent" style="white-space: pre-line;"></div>
+        <button class="close-button" onclick="closePopup()">Close</button>
+    </div>
+    
+
+    <script>
+        function submitForm() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const question1 = document.querySelector('input[name="question1"]:checked')?.value;
+    const question2 = document.querySelector('input[name="question2"]:checked')?.value;
+    const question3 = document.querySelector('input[name="question3"]:checked')?.value;
+    const suggestion = document.getElementById("suggestion").value;
+
+    if (
+        name.trim() === "" ||
+        email.trim() === "" ||
+        !validateEmail(email) ||
+        !question1 ||
+        !question2 ||
+        !question3 ||
+        suggestion.trim() === ""
+    ) {
+        alert("Please fill in all required fields with valid values.");
+    } else {
+        const submissionDetails = `Name: ${name}\nEmail: ${email}\nFirst Time Using Products and Services: ${question1}\nRecommendation to Friends and Colleagues: ${question2}\nSatisfaction Level: ${question3}\nSuggestions for Improvement: ${suggestion}`;
+        alert(submissionDetails);
+        document.getElementById("surveyForm").reset();
+    }
+}
+
+
+        function resetForm() {
+            document.getElementById("surveyForm").reset();
+            const popup = document.getElementById("popup");
+            popup.style.display = "none";
+        }
+
+        function closePopup() {
+            const popup = document.getElementById("popup");
+            popup.style.display = "none";
+        }
+
+        function validateEmail(email) {
+            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            return emailRegex.test(email);
+        }
+    </script>
+</body>
+</html>
